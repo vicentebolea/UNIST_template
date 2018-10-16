@@ -1,0 +1,154 @@
+\usepackage{dblfloatfix}
+\ProvidesPackage{template}
+
+\def\contentsname{Contents}
+\def\listfigurename{List of Figures}
+\def\listtablename{List of Tables}
+\def\refname{References}
+\def\bibname{References}
+\def\indexname{Index}
+\def\figurename{Figure}
+\def\tablename{Table}
+\def\appendixname{Appendix}
+\def\summaryname{Abstract}
+\def\acknowledgement{Acknowledgement}
+
+%% 
+\makeatletter
+\def\PaperType#1{\gdef\paper@type{#1}}
+\def\PaperTypeFull#1{\gdef\paper@fulltype{#1}}
+\def\Title#1{\gdef\name@title{#1}}
+\def\NameofDegree#1{\gdef\name@degree{#1}}
+\def\DepartmentName#1{\gdef\name@department{#1}}
+\def\AuthorName#1{\gdef\name@author{#1}}
+\def\AdvisorName#1{\gdef\name@advisor{#1}}
+\def\GraduationDate#1{\gdef\date@graduation{#1}}
+\def\SubmissionDate#1{\gdef\date@submission{#1}}
+\def\RefereeDate#1{\gdef\referee@date{#1}}
+\def\RefereeChief#1{\gdef\referee@chief{#1}}
+\def\RefereeSecond#1{\gdef\referee@second{#1}}
+\def\RefereeThird#1{\gdef\referee@third{#1}}
+\def\RefereeFourth#1{\gdef\referee@fourth{#1}}
+\def\RefereeFifth#1{\gdef\referee@fifth{#1}}
+\def\KeyWords#1{\gdef\key@words{#1}}
+\def\StudentNumber#1{\gdef\student@number{#1}}
+
+%% 
+\newcommand{\fronttitlefont}[1]{{\fontsize{21}{11}\selectfont #1}}
+\newcommand{\frontfontl}[1]{{\fontsize{16}{11}\selectfont #1}}
+\newcommand{\frontfonts}[1]{{\fontsize{14}{11}\selectfont #1}}
+\newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+\newcommand{\cedp}{\newpage{\pagestyle{empty}\clearpage}}
+
+%% Front cover
+\newcommand{\frontcoverpage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \frontfontl{\paper@fulltype} \\ 
+    \vskip 3cm 
+    \fronttitlefont{\name@title} \\    
+    \vfill 
+    \frontfontl{\name@author} \\     
+    \vskip 1cm 
+    \frontfontl{\name@department} \\
+    \vskip 2.5cm
+    \frontfontl{The Graduate School of UNIST} \\ 
+    \vskip 1cm 
+    \frontfontl{\date@graduation}
+  \end{center}
+  \vskip 0.5cm
+  \newpage 
+}
+
+%% first page 
+\newcommand{\firstpage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \fronttitlefont{\name@title} \\ 
+    \vfill		    
+	\frontfontl{\name@author} \\
+    \vfill
+    \frontfontl{\name@department}
+    \vskip 1cm
+    \frontfontl{Graduate School of UNIST} \\ 
+  \end{center}
+  \vskip 0.5cm
+  \newpage
+}
+
+%% second page
+\newcommand{\secondpage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}	    
+    \fronttitlefont{\name@title} \\ 
+    \vfill
+    \frontfonts{A \MakeLowercase{\paper@type}} \\
+    \frontfonts{submitted to the the Graduate School of UNIST} \\
+    \frontfonts{in partial fulfillment of the} \\
+    \frontfonts{requirements for the degree of} \\
+    \frontfonts{\name@degree} \\ 
+    \vskip 3cm
+    \frontfonts{\name@author} \\ 
+    \vfill
+    \frontfonts{\date@submission} \\
+    \frontfonts{Approved by} \\
+    \vskip 1cm
+    \underline{\makebox[5cm][s]{}} \\
+	\frontfonts{Advisor} \\       
+    \frontfonts{\name@advisor} \\ 
+  \end{center}
+  \vskip 0.5cm
+  \newpage
+}
+
+%% Approval page. For master's, you can skip setting 4th and 5th committee members.
+\newcommand{\approvalpage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \fronttitlefont{\name@title}
+    \vskip 2cm
+    \frontfonts{\name@author}
+    \vskip 2cm
+    \frontfonts{This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved.} \\ 
+    \vskip 1cm
+    \frontfonts{\date@submission}
+    \vfill
+    \begin{flushright}
+    \begin{tabular}{l l c}
+        & & \frontfonts{signature} \\
+		& & \underline{\makebox[5cm][s]{}} \\ 
+        & & \frontfonts{\referee@chief : Advisor} \\ \\ 
+        & & \frontfonts{signature} \\
+		& & \underline{\makebox[5cm][s]{}} \\ 
+        & & \frontfonts{\referee@second : Thesis Committee Member \#1} \\ \\ 
+        & & \frontfonts{signature} \\
+		& & \underline{\makebox[5cm][s]{}} \\ 
+        & & \frontfonts{\referee@third : Thesis Committee Member \#2} \\ \\ 
+	    %\@ifundefined{referee@fourth}{}{ 
+	    %& & \frontfonts{signature} \\
+		%& & \underline{\makebox[5cm][s]{}} \\ 
+        %& & \frontfonts{\referee@fourth : Thesis Committee Member \#3}} \\ \\ 
+        %\@ifundefined{referee@fourth}{}{
+	    %& & \frontfonts{signature} \\
+		%& & \underline{\makebox[5cm][s]{}} \\ 
+        %& & \frontfonts{\referee@fifth : Thesis Committee Member \#4}} \\ \\  
+    \end{tabular}
+    \end{flushright}
+  \end{center}
+  \vskip 0.5cm
+  \newpage
+}
+
+%% Abstract
+\newenvironment{Abstract}{
+  \thispagestyle{plain} 
+  \phantomsection 
+  \begin{center}
+    \frontfonts{Abstract} \\
+  \end{center}{}
+  \vskip 1cm
+}{
+  \vfill  
+  \medskip
+  \newpage
+}
