@@ -1,7 +1,7 @@
 \ProvidesPackage{template}
 \usepackage{dblfloatfix}
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}\linespread{1.3}
+\usepackage[utf8]{inputenc}
 \usepackage{titlesec}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -45,6 +45,7 @@
 
 \newcommand{\HIGH}[1]{{\textcolor{blue}{#1}}}
 \renewcommand{\baselinestretch}{1.5} 
+\linespread{1.3}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
 
@@ -85,17 +86,17 @@
 \newcommand{\CoverPage}{
   \thispagestyle{empty} \noindent
   \begin{center}
-    \LARGE \paper@fulltype \\
-    \vspace{3cm}
-    \huge \name@title \\
+    \LARGE \paper@fulltype 
+    \vskip 3cm
+    \huge \name@title 
     \vfill 
-    \LARGE \name@author \\
-    \vspace{2cm}
-    \LARGE \name@department \\
-    \vspace{2cm}
-    \LARGE The Graduate School of UNIST \\
-    \vspace{2cm}
-    \LARGE \date@graduation \\
+    \LARGE \name@author 
+    \vskip 2cm
+    \LARGE \name@department 
+    \vskip 2cm
+    \LARGE The Graduate School of UNIST 
+    \vskip 2cm
+    \LARGE \date@graduation 
   \end{center}
   \newpage 
 }
@@ -104,13 +105,13 @@
 \newcommand{\TitlePage}{
   \thispagestyle{empty} \noindent
   \begin{center}
-    \huge \name@title \\
+    \huge \name@title 
     \vfill
-	\LARGE \name@author \\
+    \LARGE \name@author 
     \vfill
-    \LARGE \name@department \\
-    \vspace{2cm}
-    \LARGE Graduate School of UNIST \\
+    \LARGE \name@department
+    \vskip 2cm
+    \LARGE Graduate School of UNIST 
   \end{center}
   \newpage
 }
@@ -119,21 +120,21 @@
 \newcommand{\ApprovalPage}{
   \thispagestyle{empty} \noindent
   \begin{center}	    
-    \huge \name@title \\ 
+    \huge \name@title 
     \vfill
     \Large A \MakeLowercase{\paper@type} \\
     \Large submitted to the the Graduate School of UNIST \\
     \Large in partial fulfillment of the \\
     \Large requirements for the degree of \\
-    \Large \name@degree \\ 
+    \Large \name@degree  
     \vskip 3cm
-    \Large \name@author \\ 
+    \Large \name@author 
     \vfill
     \Large \date@submission \\
-    \Large Approved by \\
+    \Large Approved by
     \vskip 1cm
     \underline{\makebox[5cm][s]{}} \\
-	\Large Advisor \\       
+    \Large Advisor \\       
     \Large \name@advisor \\ 
   \end{center}
   \newpage
@@ -147,30 +148,31 @@
     \vskip 2cm
     \Large \name@author
     \vskip 2cm
-    \Large This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved. \\ 
+    \Large This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved. 
     \vskip 1cm
     \Large \date@submission
     \vfill
     \begin{flushright}
     \begin{tabular}{l l c}
-        & & \Large signature \\
-		& & \underline{\makebox[5cm][s]{}} \\
-        & & \Large \referee@chief : Advisor \\ \\ 
-        & & \Large signature \\
-		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \Large \referee@second : Thesis Committee Member \#1 \\ \\ 
-        & & \Large signature \\
-		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \Large \referee@third : Thesis Committee Member \#2 \\ \\ 
-	    \@ifundefined{referee@fourth}{}{ 
-	    & & \Large signature \\
-		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \Large \referee@fourth : Thesis Committee Member \#3 \\ \\ 
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\
+        & & \Large \referee@chief : Advisor \\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@second : Thesis Committee Member \#1 \\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@third : Thesis Committee Member \#2 
+        \@ifundefined{referee@fourth}{}{
+    	\\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@fourth : Thesis Committee Member \#3 \\
         }
         \@ifundefined{referee@fourth}{}{
-        & & \Large signature \\
-		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \Large \referee@fifth : Thesis Committee Member \#4 \\ \\  
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@fifth : Thesis Committee Member \#4  
         }
     \end{tabular}
     \end{flushright}
