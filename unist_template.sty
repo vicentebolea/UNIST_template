@@ -1,17 +1,58 @@
-\usepackage{dblfloatfix}
 \ProvidesPackage{template}
+\usepackage{dblfloatfix}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}\linespread{1.3}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{bbm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cases}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{pdfpages}
 
-\def\contentsname{Contents}
-\def\listfigurename{List of Figures}
-\def\listtablename{List of Tables}
-\def\refname{References}
-\def\bibname{References}
-\def\indexname{Index}
-\def\figurename{Figure}
-\def\tablename{Table}
-\def\appendixname{Appendix}
-\def\summaryname{Abstract}
-\def\acknowledgement{Acknowledgement}
+\renewcommand\cftsecafterpnum{\vskip15pt}
+\renewcommand\cftsubsecafterpnum{\vskip15pt}
+\renewcommand\cftfigafterpnum{\vskip15pt}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\contentsname}{\hfill\bfseries\Large Contents\hfill \hfill}   
+\renewcommand{\listfigurename}{\hfill\bfseries\Large List of Figures\hfill}
+\renewcommand{\listtablename}{\hfill\bfseries\Large List of Tables \hfill}
+\renewcommand{\thefigure}{\arabic{figure}}
+\newcommand{\qed}{\hfill\blacksquare}
+\renewcommand{\bibname}{\hfill\bfseries\Large References \hfill\hfill}
+\renewcommand{\abstractname}{\bfseries\Large Abstract \hfill\hfill}
+
+\newcounter{lemma}
+\newcounter{proposition}
+\newcounter{theorem}
+\newtheorem{lemma}{\bf Lemma}
+\newtheorem{proposition}{\bf Proposition}
+\newtheorem{theorem}{\bf Theorem}
+\newtheorem{proof}{\bf Proof}
+
+\newcommand{\HIGH}[1]{{\textcolor{blue}{#1}}}
+\renewcommand{\baselinestretch}{1.5} 
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+\pagestyle{fancy}
+
 
 %% 
 \makeatletter
@@ -41,114 +82,99 @@
 \newcommand{\cedp}{\newpage{\pagestyle{empty}\clearpage}}
 
 %% Front cover
-\newcommand{\frontcoverpage}{
+\newcommand{\CoverPage}{
   \thispagestyle{empty} \noindent
   \begin{center}
-    \frontfontl{\paper@fulltype} \\ 
-    \vskip 3cm 
-    \fronttitlefont{\name@title} \\    
+    \LARGE \paper@fulltype \\
+    \vspace{3cm}
+    \huge \name@title \\
     \vfill 
-    \frontfontl{\name@author} \\     
-    \vskip 1cm 
-    \frontfontl{\name@department} \\
-    \vskip 2.5cm
-    \frontfontl{The Graduate School of UNIST} \\ 
-    \vskip 1cm 
-    \frontfontl{\date@graduation}
+    \LARGE \name@author \\
+    \vspace{2cm}
+    \LARGE \name@department \\
+    \vspace{2cm}
+    \LARGE The Graduate School of UNIST \\
+    \vspace{2cm}
+    \LARGE \date@graduation \\
   \end{center}
-  \vskip 0.5cm
   \newpage 
 }
 
-%% first page 
-\newcommand{\firstpage}{
+%% Title Page
+\newcommand{\TitlePage}{
   \thispagestyle{empty} \noindent
   \begin{center}
-    \fronttitlefont{\name@title} \\ 
-    \vfill		    
-	\frontfontl{\name@author} \\
+    \huge \name@title \\
     \vfill
-    \frontfontl{\name@department}
-    \vskip 1cm
-    \frontfontl{Graduate School of UNIST} \\ 
+	\LARGE \name@author \\
+    \vfill
+    \LARGE \name@department \\
+    \vspace{2cm}
+    \LARGE Graduate School of UNIST \\
   \end{center}
-  \vskip 0.5cm
   \newpage
 }
 
-%% second page
-\newcommand{\secondpage}{
+%% Approval Page
+\newcommand{\ApprovalPage}{
   \thispagestyle{empty} \noindent
   \begin{center}	    
-    \fronttitlefont{\name@title} \\ 
+    \huge \name@title \\ 
     \vfill
-    \frontfonts{A \MakeLowercase{\paper@type}} \\
-    \frontfonts{submitted to the the Graduate School of UNIST} \\
-    \frontfonts{in partial fulfillment of the} \\
-    \frontfonts{requirements for the degree of} \\
-    \frontfonts{\name@degree} \\ 
+    \Large A \MakeLowercase{\paper@type} \\
+    \Large submitted to the the Graduate School of UNIST \\
+    \Large in partial fulfillment of the \\
+    \Large requirements for the degree of \\
+    \Large \name@degree \\ 
     \vskip 3cm
-    \frontfonts{\name@author} \\ 
+    \Large \name@author \\ 
     \vfill
-    \frontfonts{\date@submission} \\
-    \frontfonts{Approved by} \\
+    \Large \date@submission \\
+    \Large Approved by \\
     \vskip 1cm
     \underline{\makebox[5cm][s]{}} \\
-	\frontfonts{Advisor} \\       
-    \frontfonts{\name@advisor} \\ 
+	\Large Advisor \\       
+    \Large \name@advisor \\ 
   \end{center}
-  \vskip 0.5cm
   \newpage
 }
 
-%% Approval page. For master's, you can skip setting 4th and 5th committee members.
-\newcommand{\approvalpage}{
+%% Confirmation page. For master's, you can skip setting 4th and 5th committee members.
+\newcommand{\ConfirmationPage}{
   \thispagestyle{empty} \noindent
   \begin{center}
-    \fronttitlefont{\name@title}
+    \huge \name@title 
     \vskip 2cm
-    \frontfonts{\name@author}
+    \Large \name@author
     \vskip 2cm
-    \frontfonts{This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved.} \\ 
+    \Large This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved. \\ 
     \vskip 1cm
-    \frontfonts{\date@submission}
+    \Large \date@submission
     \vfill
     \begin{flushright}
     \begin{tabular}{l l c}
-        & & \frontfonts{signature} \\
+        & & \Large signature \\
+		& & \underline{\makebox[5cm][s]{}} \\
+        & & \Large \referee@chief : Advisor \\ \\ 
+        & & \Large signature \\
 		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \frontfonts{\referee@chief : Advisor} \\ \\ 
-        & & \frontfonts{signature} \\
+        & & \Large \referee@second : Thesis Committee Member \#1 \\ \\ 
+        & & \Large signature \\
 		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \frontfonts{\referee@second : Thesis Committee Member \#1} \\ \\ 
-        & & \frontfonts{signature} \\
+        & & \Large \referee@third : Thesis Committee Member \#2 \\ \\ 
+	    \@ifundefined{referee@fourth}{}{ 
+	    & & \Large signature \\
 		& & \underline{\makebox[5cm][s]{}} \\ 
-        & & \frontfonts{\referee@third : Thesis Committee Member \#2} \\ \\ 
-	    %\@ifundefined{referee@fourth}{}{ 
-	    %& & \frontfonts{signature} \\
-		%& & \underline{\makebox[5cm][s]{}} \\ 
-        %& & \frontfonts{\referee@fourth : Thesis Committee Member \#3}} \\ \\ 
-        %\@ifundefined{referee@fourth}{}{
-	    %& & \frontfonts{signature} \\
-		%& & \underline{\makebox[5cm][s]{}} \\ 
-        %& & \frontfonts{\referee@fifth : Thesis Committee Member \#4}} \\ \\  
+        & & \Large \referee@fourth : Thesis Committee Member \#3 \\ \\ 
+        }
+        \@ifundefined{referee@fourth}{}{
+        & & \Large signature \\
+		& & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@fifth : Thesis Committee Member \#4 \\ \\  
+        }
     \end{tabular}
     \end{flushright}
   \end{center}
   \vskip 0.5cm
-  \newpage
-}
-
-%% Abstract
-\newenvironment{Abstract}{
-  \thispagestyle{plain} 
-  \phantomsection 
-  \begin{center}
-    \frontfonts{Abstract} \\
-  \end{center}{}
-  \vskip 1cm
-}{
-  \vfill  
-  \medskip
   \newpage
 }

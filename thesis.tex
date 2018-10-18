@@ -1,79 +1,8 @@
-\documentclass[onesided,a4paper,11pt,times,print,index,chapter]{book}
-\usepackage[left=2.54cm,right=2.54cm,top=3cm,bottom=2.54cm]{geometry}
+\documentclass[11pt,a4paper,onecolumn,oneside]{report}
+\RequirePackage[top=3cm, bottom=1in, left=1in, right=1in]{geometry}
 
-%% Packages
-\usepackage{titlesec}
-\usepackage{titletoc}
-\usepackage{lipsum}
-\usepackage{url}
-\usepackage{mathptmx}
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\usepackage{bookmark}
 \usepackage{unist_template}
-\usepackage{hyperref} 
-\usepackage{ifpdf}
-\usepackage{tocloft}
-\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
-\usepackage{bookmark}
-\let\footruleskip\undefined
-\let\interhword\undefined
-\usepackage{etoolbox}
-\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
-\ifpdf
-\hypersetup{ 
- pdftitle={Thesis},
- pdfauthor={Olzhas Kaiyrakhmet},
- citecolor=black,
- filecolor=black,
- linkcolor=black,
- urlcolor=blue,
- colorlinks = true
-} 
-\fi
-\titleformat{\chapter}[display]
-  {\normalfont}{}{0pt}{\Large \thechapter \ }
-\titlespacing{name=\chapter}{0pt}{-50pt}{11pt}
-\renewcommand{\thechapter}{\Roman{chapter}.}
-\renewcommand{\thesection}{\arabic{section}.\arabic{section}}
-\renewcommand{\baselinestretch}{1.5}
 
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
-\cftsetindents{section}{0.5in}{0.5in}
-\cftsetindents{subsection}{0.5in}{0.5in}
-\cftsetindents{subsubsection}{0.5in}{0.5in}
-\cftsetindents{paragraph}{0.5in}{0.5in}
-
-%% toc
-\renewcommand{\cfttoctitlefont}{\hfill \Large}
-\renewcommand{\cftaftertoctitle}{\hfill \hfill}
-\setlength{\cftbeforetoctitleskip}{-14pt}
-\setlength{\cftaftertoctitleskip}{0pt}
-%% lof
-\renewcommand{\cftloftitlefont}{\hfill \Large}
-\renewcommand{\cftafterloftitle}{\hfill}
-\setlength{\cftbeforeloftitleskip}{-14pt}
-\setlength{\cftafterloftitleskip}{0pt}
-%% lot
-\renewcommand{\cftlottitlefont}{\hfill \Large}
-\renewcommand{\cftafterlottitle}{\hfill}
-\setlength{\cftbeforelottitleskip}{-14pt}
-\setlength{\cftafterlottitleskip}{0pt}
-
-\renewcommand{\cftchapdotsep}{\cftdotsep}
-\renewcommand{\cftchapfont}{ \selectfont }
-\renewcommand{\cftchappagefont}{ \selectfont }
-\renewcommand{\thefigure}{\arabic{figure}}
-\renewcommand{\thetable}{\arabic{table}}
-% for figures
-\renewcommand{\cftfigpresnum}{Figure } % put before the number
-\renewcommand{\cftfigaftersnum}{.}  % put after the number
-\addtolength{\cftfignumwidth}{7mm} % adjust spacing
-% for tables
-\renewcommand{\cfttabpresnum}{Table }
-\renewcommand{\cfttabaftersnum}{.}
-\addtolength{\cfttabnumwidth}{6mm}
 \begin{document}
 
 %% Settings
@@ -94,20 +23,20 @@
 \AdvisorName{Young-ri Choi}
 
 %% Front Cover
-\frontcoverpage
-%% first page
-\firstpage
-%% second page
-\secondpage
-%% Approval page
-\approvalpage
+\CoverPage
+%% Title Page
+\TitlePage
+%% Approval Page
+\ApprovalPage
+%% Confirmation Page
+\ConfirmationPage
 
 %% Abstract
 \pagestyle{plain}
 \include{abstract}
 \cedp
-\frontmatter
-  
+
+%% TOC LOF LOT
 \tableofcontents
 \cedp
 \listoffigures
@@ -115,8 +44,7 @@
 \listoftables
 \cedp
   
-%% Chapters
-\mainmatter
+%% Sections
 \include{introduction}
 \cedp
 \include{evaluation}
