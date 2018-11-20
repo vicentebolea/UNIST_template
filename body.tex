@@ -1,0 +1,82 @@
+\section{Elastic VeloxDFS}
+\subsection{Goals}
+The concept of elastic blocks is a superset of coalescent blocks in the sense that coalescent blocks are a representation of blocks that can only grow, whereas elastic blocks are blocks which can grow or shrink at any time. \\
+Whereas previous work with coalescent blocks has shown that overall performance can be greatly improved by removing initialization cost. Elastic blocks tries to cover one more side by targeting load balancing. \\
+Elastic blocks can achieve higher load balancing by shrinking blocks in the nodes which are straggling and expanding blocks in the nodes which are achieving an outsanding performance.
+
+
+\subsection{History}
+Elastic blocks enabled VeloxDFS is the last iteration of many iterations of the Velox Big Data framework. The development of this framework has taken several years and it started from the study of distributed in-memory caches circa 2011 (cite Youngmoon and Deukyeon). Such study enlight us with the ideas of writing a mapreduce framework which benefits from inmemory distributed cache by using a cache aware scheduler. With that in mind we implemented EclipseMR in 2014, a MapReduce framework prototype which uses inmemory cache aware job scheduler and a consiting hashing underline distributed file system with also an alignment to the the inmmory cache. This design showed a greater performance compared to Hadoop and Spark in many of the single and multiple jobs standard bencharks (such as Terasort, WordCount, and Kmeans). EclipseMR was published at the IEEE Cluster 2017 at Honolulu, HW\\\\
+
+With all these innovations in our project, by 2015 we decided to go a step forward and create an industry capable Big Data Framework utilizing all the novel techniques used in our previous research and prototypes. The codename for such framework was Velox (From the Latin Fast). \\
+Velox requirements were: Double-ring Distributed hash table shaped inmemory cache and distributed filesystem; easily exentible design; Programable client API in Python, Java and C++; and most importantly iterative and DAG MapReduce jobs support. \\
+
+Having all of those features in our backlog, I was assigned to design the system as a whole and started the implementation in early 2015 with few more colleagues. Concurrently, we enrolled an startup incubator program in where we try to gain traction to our OSS Velox Big Data Framework and potential find ways to monetize our work similarly to many other Apache fundation Big Data projects. \\
+During that year most of our work was focus on finishing several milestones to keep up with our funding budget and traction. \\
+
+Unfortunatelly, while we implemented most of our backlog, due to multiple technical issues the final performance was very poor compared to our rival systems (Such as Hadoop and Spark). Our man power to implement this system was very limited, undegraduate and graduate students who can participate in the code in their spare time. For all those reason, we gave up the idea of finding monetary ways to our projects and moved towards narrowing the scope of our requirements at the end of 2016. \\
+
+We noticed that while the MapReduce engine was very promising, the Distributed file system was easier to tweek due to its simplicity. In the summer of 2017 explored the idea of enhancing current MapReduce frameworks throughput by using a custom underline Distributed file system which locates blocks at more convenient positions. This idea has an strong inspiration from previous works about reducing container initialization cost by coaslincing blocks in Hadoop. \\
+
+For that purpose we moved an step forward and we decided to make VeloxDFS to generate logical block distributions consisting on the underline physical distributions. Those logical blocks can have arbitrary sizes, customizable by a new logical block scheduler engine embebded in each FileLeader at the VeloxDFS. \\
+
+After several iteration, we explored the idea about having arbitrary sized logical blocks in which their size changes dynamically at run-time (While a MapReduce job is running). Hence, for once we studied the idea of elastic blocks distributed file system. This work explores in detail about this idea and present what enhancement and challenges this idea brings.
+
+
+\subsection{Design}
+Previous work with coalesent blocks has shown that it can be done by a clever implementation using solely hadoop client APIs. This is not the case of elastic blocks since it require
+This exclusive feature requires the elastic block to be provided with additional
+This studies has the following components: Hadoop MapReduce, Hadoop FileSystem (HDFS), and VeloxDFS. 
+
+In this study we present the performance of VeloxDFS + Hadoop mapreduce vs. Hadoop mapreduce + HDFS. Additionally, we present different algorithms 
+
+Both elastic blocks and coaleset blocks are implemented by adding a layer of indirecction between what the MapReduce software sees and what the physical representation is. This is we separate the blocks between logical blocks and physical blocks, as seen in the figure A. \\
+Having this new layer of indirection requires having a mapping between the logical and the physical boundary. 
+
+\subsection{VeloxDFS}
+VeloxDFS is a decentralized distributed file system based on ChordDHT and HDFS.
+
+This distributed file system serves as the foundation and essential component of the Velox Big Data Framework (VBDF), however, it can be used independently of the other components such as VeloxMR (MapReduce Framework).
+
+Key features of current VeloxDFS implementation includes:
+\begin{itemize}
+\item No central directory service such as in HDFS NameNode.
+\item Logical block representation where the size adapts to the current workload.
+\item HADOOP API to be used instead of HDFS.
+\end{itemize}
+
+\subsection{Lean Scheduler}
+The mechanism to assign the initial elastic blocks distribution and to control its resizing is done by the \textit{lean scheduler}. The scheduler is situated in both the client and the server side. In the server side the scheduler arranges its initial block distribitiouns explicitly at the fileleader making its best guesses using different techniques to construct logical blocks usings locally accesible phyical blocks. The client side of the lean scheduler is at the client side of VeloxDFS API to Hadoop (Invoke by Hadoop's \texttt{RecordReader}.
+
+Due to the fact of having two types of schedules call, one initial and one (or more) at run-time, we need a way to partition the input data 
+among the different scheduler calls. At the highest level, We split the input data into two segments: one for the initial block assignment and the remaining input data for the consequently run-time elastic block adjustment. The initial block assignment percentage is noted as $\alpha$ in this description
+
+\subsubsection{Server side lean scheduler}
+The server side of the lean scheduler competence is to write the initial phyisical blocks to logical blocks mappings, e.g. the initial logical block distributions. This scheduler invokation is done at the target file's \texttt{FileLeader}. As explained in the previous section the server side of the lean scheduler will commit a certain percentage $\alpha$ of the input data during the initial phase 
+
+\subsubsection{Client side lean scheduler}
+The client side of the lean scheduler compentece is to dynamically adjust the intially given logical blocks. This adjustment takes places after $\alpha I$ has been processed. The run-time block adjustements is done by dynamically assigning physical blocks to the current logical blocks. This is, whenever a tasks finishes with a physical block it will then attempt to process another phyiscal block's replica. Since there are multiple replicas we can consider that the slot with the highest throuput is more likely to process one of the physical blocks's replicas. Also, having this redundancy creates the need to have some sort of synchronization technique in the form of lock. In our work, we use a distributed lock system with as much locks as phyiscal blocks, in the following section we will cover the overhead consideration of this design.
+
+
+\subsubsection{Overhead considerations}
+The design of the lean scheduler obviates a particular bottleneck located at the distributed lock system. Such distributed lock system must maintain as much locks as physical chunks in the file that 
+we are currently processing. Additionally, each of the tasks would concurrently attempt to lock the locks of its asigned physical chunks. This can be a problem when we scale our cluster to have more then 10000 slots, with each slots having hundres of physical chunks. Several approaches can be determined such as partitioning the locks accross multiple nodes, and buffering the lock request a transaction of multiple requests.  
+
+\subsection{One-shot schedulers}
+Prior finding the technical solution to communicate with hadoop at run time, we designed Block partitioners which creates an static block distribution just before the job was to be run. The idea was to generate a block distibution which mimics the current IO status of the server using several heuristics or to generate block distribution using different mathematical series.
+
+\subsubsection{IO aware block partitioner}
+The first block scheduler that we consider created logical block distributions upon the current IO/CPU workload the given cluster. For that purpose we collected Exponental Weighted moving Averages of the current IO usage percentage read from UNIX tools such as \texttt{iostat} every an user specified amount of time. We also kept track of the load average of each machine to determine how many free cores each server has.
+
+Upon this infromation the IO aware schedule will generate a etherable score of each of the replica of each phyiscal block. Such as score also consider the load balance in which the parameter to weight the load balance v.s. the IO score is $\alpha$.
+For each physical block, its replica with the highest score would be assigned to its corresponding logical block. This resulted ina block distribution which mimincs the current system workload. 
+
+While, this technique resulted in good performance some times. We found that often the system workload could rapidly change, thus rendering our well crafted block distribution outdated.
+
+\subsubsection{Recursive block partitioner}
+Realizing that as much as we measure our cluster IO statitics, our corresponding block distributions would never be a definitily solution since the sytem workload is often unpredictible, we decided to approach our problem by generating certain block distributions which reduces the system inbalance due to tail tasks. \\
+This is, it only takes a straggling task to delay the whole job execution time. The approach to fix this was to generate a logical block distribution consisting in initial large logical blocks followed by one or more waves of recursivly smaller logical blocks. By doing that we hoped Hadoop to start scheduling those large blocks first and start allocating the smaller blocks in the slots which are free (this is, the good performing slots). \\
+This idea gave good load balance results, however, often Hadoop would not honor our request to schedule first the large logical blocks saboteting our idea and finally rendering our idea useless.
+
+\section{Technical considerations}
+\lipsum[10]
