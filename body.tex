@@ -1,16 +1,58 @@
 \section{VeloxDFS}
-\subsection{Goals}
-MapReduce systems as many other parallel systems can quantified by a set of variables which describes the system. In this research the aim is performace, thus scope of the set of variables is narrowed into three fundamental aspects: Job Throughput, Load balance, and Average job Latency. 
+\subsection{Overview}
+Contrary to what to a convetional description would, I would like to introduce
+VeloxDFS by deepen into Apache Hadoop.
 
- \begin{itemize}
-     \item \textbf{Throughput} How much data is the system processing in a given time.
-     \item \textbf{Load balance} How well is the system diving the processing among its different components (Cores and machines). In this category, in MapReduce systems we have two main tenets:
-     \begin{enumerate}
-         \item \textbf{Inter-job load balancing}, how well the tasks within a job uses all available resources
-         \item \textbf{Between-jobs load balancing}, how well the jobs cooperate each other to extract all available resources of the system.
-     \end{enumerate}
-     \item \textbf{Latency} How fast can the system return the output of a job.
- \end{itemize}
+As we have discussed in the previous sections, one of the most important Big
+Data processing framework is Apache Hadoop.  At the very hight level Hadoop as
+two components: Hadoop File System and Hadoop MapReduce (Along YARN and other
+essential services).
+
+\\ \\ 
+
+VeloxDFS is the component of another framework named Velox Big Data Framework
+which similarly to Apache Hadoop has the same two main levels: VeloxMR,
+MapReduce engine; and VeloxDFS, Distributed File System .  Nonetheless,
+VeloxDFS can be also use with Apache Hadoop (Substituting HDFS), and not only
+that, very interestly, later versions of VeloxDFS are solely compatible with
+Hadoop for many reasons outside of the scope of this thesis.
+
+\\ \\ 
+
+One key difference with Hadoop file system that the reader already know is
+about the elastic blocks, thus I would not deepen into this topic in this
+section. Other key differences are regarding the topology of the network, while
+Hadoop uses a standalone centralized network with a Namenode (and a qoura with
+HA enabled), in  VeloxDFS each node is also a Namenode for a small subsets of
+its files and blocks. We achieve this by representing the nodes and the files
+in Distributed Hash table or \textit{DHT} using CHORD-like protocol which ensures
+safe node entering and joining while also statistically splitting each of the
+file metadata evenly accross the cluster. Also, similarly to HDFS we provide 
+data recovery by means of data redundancy using replicas stored in different nodes.
+
+\\ \\
+
+As for technical aspects the whole file systems is written in C++ for being
+able to access Operating System low-level components and it network stack is
+based on BOOST ASIO using proactor model.
+
+\subsection{Goals} 
+
+As in many other parallel problems MapReduce systems can be quantified by a set of 
+variables which describes the system how well does the system perfom versus a different one. 
+In this work we focus in two key aspects: \textit{Job Execution time} and \textit{Load balancing}.
+%three fundamental aspects: Job Throughput, Load balance, and Average job
+%Latency. 
+%
+% \begin{itemize}
+%     \item \textbf{Throughput} How much data is the system processing in a given time.
+%     \item \textbf{Load balance} How well is the system diving the processing among its different components (Cores and machines). In this category, in MapReduce systems we have two main tenets:
+%     \begin{enumerate}
+%         \item \textbf{Inter-job load balancing}, how well the tasks within a job uses all available resources
+%         \item \textbf{Between-jobs load balancing}, how well the jobs cooperate each other to extract all available resources of the system.
+%     \end{enumerate}
+%     \item \textbf{Latency} How fast can the system return the output of a job.
+% \end{itemize}
  
 \subsection{History}
 Elastic blocks enabled VeloxDFS is the last iteration of many iterations of the Velox Big Data framework. The development of this framework has taken several years and it started from the study of distributed in-memory caches circa 2011 (cite Youngmoon and Deukyeon). Such study enlight us with the ideas of writing a mapreduce framework which benefits from inmemory distributed cache by using a cache aware scheduler. With that in mind we implemented EclipseMR in 2014, a MapReduce framework prototype which uses inmemory cache aware job scheduler and a consiting hashing underline distributed file system with also an alignment to the the inmmory cache. This design showed a greater performance compared to Hadoop and Spark in many of the single and multiple jobs standard bencharks (such as Terasort, WordCount, and Kmeans). EclipseMR was published at the IEEE Cluster 2017 at Honolulu, HW\\\\
@@ -29,28 +71,6 @@ For that purpose we moved an step forward and we decided to make VeloxDFS to gen
 
 After several iteration, we explored the idea about having arbitrary sized logical blocks in which their size changes dynamically at run-time (While a MapReduce job is running). Hence, for once we studied the idea of elastic blocks distributed file system. This work explores in detail about this idea and present what enhancement and challenges this idea brings.
 
-\subsection{Overview}
-VeloxDFS is a decentralized distributed file system based on ChordDHT and HDFS.
-
-
-This distributed file system serves as the foundation and essential component of the Velox Big Data Framework (VBDF), however, it can be used independently of the other components such as VeloxMR (MapReduce Framework).
-
-Key features of current VeloxDFS implementation includes:
-\begin{itemize}
-\item No central directory service such as in HDFS NameNode.
-\item Logical block representation where the size adapts to the current workload.
-\item HADOOP API to be used instead of HDFS.
-\end{itemize}
-
-Previous work with coalesent blocks has shown that it can be done by a clever implementation using solely hadoop client APIs. This is not the case of elastic blocks since it require
-This exclusive feature requires the elastic block to be provided with additional
-This studies has the following components: Hadoop MapReduce, Hadoop FileSystem (HDFS), and VeloxDFS. 
-
-In this study we present the performance of VeloxDFS + Hadoop mapreduce vs. Hadoop mapreduce + HDFS. Additionally, we present different algorithms 
-
-Both elastic blocks and coaleset blocks are implemented by adding a layer of indirecction between what the MapReduce software sees and what the physical representation is. This is we separate the blocks between logical blocks and physical blocks, as seen in the figure A. \\
-Having this new layer of indirection requires having a mapping between the logical and the physical boundary. 
-VeloxDFS is a C++ chord like distributed system 
 
 \subsection{Architecture}
 At the core, VeloxDFS is a decentralized userspace distributed file system written in C++. The file system relies on Chord-like Distributed Hash table, this is distributed consistent hashing to index files and blocks across the different nodes and to enable nodes leaving and entering the network with a safe manner\footnote{As for Novemver of 2018, the chord protocols for joining and exiting the network are to be implemented and it our backlog. Reasons are that so far we are still developing VeloxDFS and much of our efforts comes into finding novel ways to distribute the blocks}.
