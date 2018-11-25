@@ -2,10 +2,35 @@
 \begin{verse}
 "Discovery is seeing what everybody else has seen, and thinking what nobody else has thought.” - Albert Szent-Gyorgi
 \end{verse}
-File partitioning is one of the most ubiquitous techniques in HPC and Big Data systems. File partitioning is often a simple technique which for that very reason is often ignore and overlooked moving most of the research focus to more complex components and techniques.
-. \\ \\
-This thesis questions this assumptions and explores different techniques to make file partitioning a key process for big data processing systems.
-\\ \\
-Additionally, but not less importantly this thesis presents a Velox File System. A novel distributed file systems part of the Velox Big Data Framework which heavy utilizes heavy optimized file partitioning techniques. 
-\\ 
+\subsection{Background}
+The main purpose of a computer is to generate useful output, or in a more specific language: Information. From an user which uses its smart-phone to check its 
+social networks to the data scientist in a enormous bank which generates metrics upon the likelihood of a customer to default its current month credit card payment, both of them interested in getting their information in a decent amount of time. From banal to extremely important, from easy to obtain to very hard to obtain, generating information is the most essential function that a computer system performs. \\ \\
 
+There is not doubt that we live in the age of the information, and that every thing is connected to the internet one way or the other. People wakes up and go to sleep with their smart-phones on, almost every non trivial device is connected and generating data, thinking about cars, heaters, AI devices, video-consoles,CCTVs, Smart-Factories, and an infinite list of more devices. There are well know studies that suggest that the amount of data being generate grows XXX every year. \\ 
+
+Nonetheless, data by itself is useless, you can have a trillion records of the \textit{timestamps} of when people turn on their phone screens, but there is not much you could do with that data apart of joining a big data club. You could visualize the CEO of Apple with a several terabytes text file of those \textit{timestamps}, would he be able to use this data to come up with a interesting feature for his new iPhone? Definitely not! He would need to extract insights from this data, he would need to process this data and he would need to visualize it \-. \\ \\
+
+Hopefully, at this point it might have already became obvious to the reader about the importance of data processing, or in other words, creating information. It is such an important concept that there is a relatively popular Computer Sciences specialization named \textit{Data engineering} which focus on this very point: \textit{How to design systems that can process and store a lots of data}. \\ \\
+
+There is no surprise that companies that based most of its revenues in the manipulation and trading of its users data has been key players in the development of such systems. A very good example would be the ubiquitous distributed processing systems or Big Data Framework Apache Hadoop which has its origins in the Yahoo's office based on ideas from the Google's \textit{in-house} technologies of \textit{The Google File System} and \textit{MapReduce} CITE. There are also multiple other examples such as Apache Kafka and Linkedin; Apache Storm and Twitter; Hive and Facebook and many others. \\ \\
+
+It was not just a coincidence that I emphasized the case of Apache Hadoop, most of the work presented in this study is an improvement over the current Hadoop's load balancing techniques, this is, how well is the work distributed among every computer in the cluster such that we get the system best possible performance. The very interesting part of this work is the means by what this works enables a better load balancing, and this is by modifying one of the most simple components of the Hadoop framework, its file partitioning model.
+
+\subsection{Data partitioning}
+
+File partitioning is one of the simplest and most ubiquitous techniques in HPC and Big Data systems. Due to its simplicity, file partitioning has not often been a popular topic in the Academia to be researcher and to be advanced. Nonetheless, file partitioning is a key concept which determines performance and load balance in distributing systems since it often determines the size and number of the independent \textit{units} of our parallelizable problem that we aim to solve. 
+\\ \\ 
+This work questions this assumptions and explores different techniques to make file partitioning a key process in the improvement of current big data processing and storage systems. The main contribution of this work results from adding the capacity to each of those partitions to dynamically change its size, allowing them to adjust its size and boundaries to its most optimal configuration upon the very current workload in the cluster level. 
+\\ \\ 
+While we might get lost in the details that this study presents, the proposed concept of this work is rather simple. Consequently, by this very first introduction the reader should be able to understand it. The rest of the work covers details regarding: the current background of this area, the several iteration through thought the final finding of our ultimate concept, the implementation details, its evaluation, and finally insight learns from the evaluation and future works. 
+\\ \\
+A very important part of this work is the presentation of a novel Distributed File System named VeloxDFS which is based on the idea of those Elastic file partitions. As the reader might intuit, when compared with traditionally distributed File system for MapReduce applications such as Hadoop File System, the main difference between those two file system at the file partitioning level would be that: VeloxDFS partitions are dynamic (they might change at any time) whereas Hadoop File System has a fixed file partitions which are exclusively defined by the time that the file was inserted in its metadata servers (Namenode instances).
+\\ \\
+To depth into the this comparison between two types of file partition, rega 
+\lipsum[20]
+% Explain through the figure about this elastic file syesmte
+
+\subsection{Logical Blocks Representation}
+The concept of elastic blocks is a subset of coalescent blocks in the sense that coalescent blocks are a representation of blocks that can only grow, whereas elastic blocks are blocks which can grow or shrink at any time. \\
+Whereas previous work with coalescent blocks has shown that overall performance can be greatly improved by removing initialization cost. Elastic blocks tries to cover one more side by targeting load balancing. \\
+Elastic blocks can achieve higher load balancing by shrinking blocks in the nodes which are straggling and expanding blocks in the nodes which are achieving an outstanding performance. To sum up the goals
