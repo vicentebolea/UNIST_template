@@ -10,7 +10,7 @@ bank which generates metrics upon the likelihood of a customer to default its
 current month credit card payment, both of them interested in getting their
 information in a decent amount of time. From banal to extremely important, from
 easy to obtain to very hard to obtain, generating information is the most
-essential function that a computer system performs. \\ \\
+essential function that a computer system performs. \\
 
 There is not doubt that we live in the age of the information, and that every
 thing is connected to the internet one way or the other. People wakes up and go
@@ -27,30 +27,30 @@ visualize the CEO of Apple with a several terabytes text file of those
 \textit{timestamps}, would he be able to use this data to come up with a
 interesting feature for his new iPhone? Definitely not! He would need to extract
 insights from this data, he would need to process this data and he would need to
-visualize it \-. \\ \\
+visualize it \-. \\
 
 Hopefully, at this point it might have already became obvious to the reader
 about the importance of data processing, or in other words, creating
 information. It is such an important concept that there is a relatively popular
 Computer Sciences specialization named \textit{Data engineering} which focus on
 this very point: \textit{How to design systems that can process and store a lots
-of data}. \\ \\
+of data}. \\
 
 There is no surprise that companies that based most of its revenues in the
 manipulation and trading of its users data has been key players in the
 development of such systems. A very good example would be the ubiquitous
 distributed processing systems or Big Data Framework Apache Hadoop which has its
 origins in the Yahoo's office based on ideas from the Google's \textit{in-house}
-technologies of \textit{The Google File System} and \textit{MapReduce} CITE.
+technologies of \textit{The Google File System} and \textit{MapReduce}\cite{ghemawat2003google}.
 There are also multiple other examples such as Apache Kafka and Linkedin; Apache
-Storm and Twitter; Hive and Facebook and many others. \\ \\
+Storm and Twitter; Hive and Facebook and many others. \\
 
 It was not just a coincidence that I emphasized the case of Apache Hadoop, most
 of the work presented in this study is an improvement over the current Hadoop's
 load balancing techniques, this is, how well is the work distributed among every
 computer in the cluster such that we get the system best possible performance.
 The very interesting part of this work is the means by what this works enables a
-better load balancing, and this is by modifying one of the most simple
+better load balancing, and this is by modifying one of the most simpl
 components of the Hadoop framework, its file partitioning model.
 
 \subsection{Data partitioning}
@@ -58,23 +58,23 @@ components of the Hadoop framework, its file partitioning model.
 File partitioning is one of the simplest and most ubiquitous techniques in HPC
 and Big Data systems. Due to its simplicity, file partitioning has often
 not attracted the attention in  Academia and industry circles who would prefer
-to put its focus in more challenging and aparently complicated aspects of Big
+to put its focus in more challenging and apparently complicated aspects of Big
 Data Systems. Nonetheless, through this work I attempt to debunk this assumption
 by proving how file partitioning is a key concept which determines performance and
-load balance in distributing systems. \\ \\
+load balance in distributing systems. \\
 
-A quick intiution would be that as file
-parititoning determines the size and the number of the independent \
-textit{units} of our parallelizable problem, a sophisticated and customizable scheme 
+A quick intuition would be that as file
+partitioning determines the size and the number of the independent 
+\textit{units} of our parallelizable problem, a sophisticated and customized scheme 
 to partition our problem might empower us to have the ability to control the
-workload in each of the parallelizable units of our problem. \\ \\
+workload in each of the parallelizable units of our problem. \\
 
 This work depths into idea and explores different techniques to make
 file partitioning a key process in the improvement of current big data
 processing and storage systems. The main contribution of this work results from
 adding the capacity to each of those partitions to dynamically change its size,
 allowing them to adjust its size and boundaries to its most optimal
-configuration upon the very current workload in the cluster level.  \\ \\
+configuration upon the very current workload in the cluster level.  \\
 
 While we might get lost in the details that this study presents, the proposed
 concept of this work is rather simple. Consequently, by this very first
@@ -82,7 +82,7 @@ introduction the reader should be able to understand it. The rest of the work
 covers details regarding: the current background of this area, the several
 iteration through thought the final finding of our ultimate concept, the
 implementation details, its evaluation, and finally insight learns from the
-evaluation and future works.  \\ \\
+evaluation and future works.  \\
 
 A very important part of this work is the presentation of a novel Distributed
 File System named VeloxDFS which is based on the idea of those Elastic file
@@ -92,11 +92,32 @@ the main difference between those two file system at the file partitioning level
 would be that: VeloxDFS partitions are dynamic (they might change at any time)
 whereas Hadoop File System has a fixed file partitions which are exclusively
 defined by the time that the file was inserted in its metadata servers (Namenode
-instances).  \\ \\
+instances).  \\
 
-To depth into the this comparison between two types of file partition, rega
-\lipsum[20]
-% Explain through the figure about this elastic file syesmte
+To deepen into the this comparison between two types of file partition:
+\begin{itemize}
+    \item \textbf{Hadoop} Would split the files in the same (128MB) fixed size chunks
+          as shown in the figure \ref{fig:hdfs_part}
+          
+    \item \textbf{VeloxDFS} would split the files in a more sophisticated way, it would try
+        to divide the chunks such that idle servers would get to read more bytes than straggling servers
+        as seen in the figure \ref{fig:vdfs_part}
+\end{itemize}
+
+
+\label{fig:hdfs_part}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/hadoop_partition.png}
+    \caption{Hadoop file partition}
+\end{figure}
+
+\label{fig:vdfs_part}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/lean_idea.png}
+    \caption{Elastic Block Intuition}
+\end{figure}
 
 \subsection{Elastic Blocks}
 
@@ -104,25 +125,26 @@ The idea of elastics blocks has not been the product of a single isolated idea
 whereas it has its foundation in previous works performed at the Data Intensive
 Computing lab regarding. The elastic block is the iteration of previous works
 such as logical static blocks which we cover in the following pages and very 
-notably: Coalesicing blocks in Hadoop CITE. \\ \\ 
+notably: Coalescing blocks in Hadoop \cite{kim2017coalescing}. \\ 
 
-Elastic Blocks carries an aditional meaning compared to logical blocks, this is
+Elastic Blocks carries an additional meaning compared to logical blocks, this is
 the ability to be changed at run-time. I proposed the term elastic based on the
 notion of flexibility, previous approaches with logical blocks where prove very
 limited in the sense that our schedulers where able to change the file partitions 
-only just before running a job. \\ \\ 
+only just before running a job. \\ 
 
-A very important componennt for elastic blocks is how to decided which partition must be
-enlarged or shrinked. At the very high level we achieve this by first proposing
+A very important component for elastic blocks is how to decided which partition must be
+enlarged or shrinks. At the very high level we achieve this by first proposing
 an initial even block distribution before the job start and later on as the
 tasks are progressing adjusting the partitions upon each of their throughput.
-This is elagantly achieved by providing the tasks with a shared-like queue where
+This is elegantly achieved by providing the tasks with a shared-like queue where
 good performing tasks can ask for more input and enlarge their blocks while
 straggling task would not. More explicit details would be discussed later on
-this work. \\ \\ 
+this work. \\ 
 
 This additional and fundamental feature of being able to change its size on
 run-time does not come without a cost and some part of this work covers the
 design and overhead induced by enabling such a distributed subsystem which monitors and
 resize the boundaries of the partitioned file.
+
 
