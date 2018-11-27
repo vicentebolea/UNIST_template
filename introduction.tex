@@ -3,41 +3,54 @@
 \begin{verse} "Discovery is seeing what everybody else has seen, and thinking
 what nobody else has thought.” - Albert Szent-Gyorgi \end{verse}
 
-\subsection{Background} The main purpose of a computer is to generate useful
-output or in a more precise word, information. From a teenager using an
-smart-phone to check its social networks to the data scientist in a enormous
-bank tuning credit score algorithms, the property of generating information has
-enabled unthinkable ways of improving our life and work. At this age, even the least
-interested person in the intrepid discipline of computer sciences would be still interested in 
-getting a new smart-phone and computer that performs its operations in a faster way than its 
-current hardware.\\
+\subsection{Background} 
 
-There is not doubt that we not only live at the age of the information, we are currently at the 
-very stage of the big data. Data is being generated at an enormous growth, to give some you some idea: 90\% of the current data hold in internet was created in the last two years\cite{furht2016big}. This unprecedented phenomenon is not alien to anyone who has been around in the past years. We have embraced 
-big data, we rely on navigator apps, Netflix movies suggestion, Cloud services, AI devices, Smart heaters and smart-plugs (really?), and a very long list of everyday devices that in the past year have became smart.
-As scary as it sounds, every time we enable one device to be connected to a cloud service we give a part of our privacy regarding how we interact with such device to whatever company owns that data centers. However, this work is not an essay about the dangers of big data, rather is a malevolent work which
-describes a novel way to process data at a faster rate.
+The main purpose of a computer is to generate useful output or in a more
+precise word, information. From a teenager using an smart-phone to check its
+social networks to the data scientist in a enormous bank tuning credit score
+algorithms, the property of generating information has enabled unthinkable ways
+of improving our life and work. At this age, even the least interested person
+in the intrepid discipline of computer sciences would be still interested in
+getting a new smart-phone and computer that performs its operations in a faster
+way than its current hardware.\\
+
+There is not doubt that we not only live at the age of the information, we are
+currently at the very stage of the big data. Data is being generated at an
+enormous growth, to give some you some idea: 90\% of the current data hold in
+internet was created in the last two years\cite{furht2016big}. This
+unprecedented phenomenon is not alien to anyone who has been around in the past
+years. We have embraced big data, we rely on navigator apps, Netflix movies
+suggestion, Cloud services, AI devices, smart heaters and smart-plugs, 
+and a very long list of everyday devices that in the past year have
+became smart.  As scary as it sounds, every time we enable one device to be
+connected to a cloud service, we give a part of our privacy regarding how we
+interact with such device to whatever company owns that data centers. However,
+this work is not an essay about the dangers of big data, rather is a malevolent
+work which describes a novel way to process data at a faster rate.
 
 Nonetheless, data by itself is useless, you can have a trillion records of the
-\textit{timestamps} of when people turn on their phone screens, but there is not
-much you could do with that data apart of joining a big data club. You could
-visualize the CEO of Apple with a several terabytes text file of those
+\textit{timestamps} of when people turn on their phone screens, but there is
+not much you could do with that data apart how figuring out where to store that
+much data\footnote{One billion in the short scale is 1,000,000,000,000 which by
+using a 16 bytes record would yield 116 TeraBytes of data} You could visualize
+the CEO of Apple with a several terabytes text file of those
 \textit{timestamps}, would he be able to use this data to come up with a
-interesting feature for his new iPhone? Definitely not! He would need to extract
-insights from this data, he would need to process this data, and then, he would need to
-visualize it -- which this humble computer scientist knows little about . \\
+interesting feature for his new iPhone?  Definitely not! He would need to
+extract insights from this data, he would need to process this data, and then,
+he would need to visualize it -- which this humble computer scientist knows
+little about. \\
 
 Hopefully, at this point it might have already became obvious to the reader
 about the importance of data processing, or in other words, creating
 information. It is such an important concept that there is a relatively popular
 Computer Sciences specialization named \textit{Data engineering} which focus on
-this very point: \textit{How to design systems that can process and store a lots
-of data}. \\
+this very point: \textit{How to design systems that can process and store a
+lots of data}. \\
 
 There is no surprise that companies that based most of its revenues in the
 manipulation and trading of its users data has been key players in the
 development of such systems. A very good example would be the ubiquitous
-distributed processing systems or Big Data Framework Apache Hadoop which has its
+distributed processing system  or Big Data Framework Apache Hadoop which has its
 origins in the Yahoo's office based on ideas from the Google's \textit{in-house}
 technologies of \textit{The Google File System} and \textit{MapReduce}\cite{ghemawat2003google}.
 There are also multiple other examples such as Apache Kafka and Linkedin; Apache
@@ -83,11 +96,11 @@ implementation details, its evaluation, and finally insight learns from the
 evaluation and future works.  \\
 
 A very important part of this work is the presentation of a novel Distributed
-File System named VeloxDFS which is based on the idea of those Elastic file
+File System named \textbf{VeloxDFS} which is based on the idea of those Elastic file
 partitions. As the reader might intuit, when compared with traditionally
 distributed File system for MapReduce applications such as Hadoop File System,
 the main difference between those two file system at the file partitioning level
-would be that: VeloxDFS partitions are dynamic (they might change at any time)
+would be that: \textbf{VeloxDFS} partitions are dynamic (they might change at any time)
 whereas Hadoop File System has a fixed file partitions which are exclusively
 defined by the time that the file was inserted in its metadata servers (Namenode
 instances).  \\
@@ -132,7 +145,7 @@ limited in the sense that our schedulers where able to change the file partition
 only just before running a job. \\ 
 
 A very important component for elastic blocks is how to decided which partition must be
-enlarged or shrinks. At the very high level we achieve this by first proposing
+enlarged or shrinked. At the very high level we achieve this by first proposing
 an initial even block distribution before the job start and later on as the
 tasks are progressing adjusting the partitions upon each of their throughput.
 This is elegantly achieved by providing the tasks with a shared-like queue where
