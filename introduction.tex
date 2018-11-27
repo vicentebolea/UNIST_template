@@ -4,21 +4,19 @@
 what nobody else has thought.” - Albert Szent-Gyorgi \end{verse}
 
 \subsection{Background} The main purpose of a computer is to generate useful
-output, or in a more specific language: Information. From an user which uses its
+output or in a more precise word, information. From a teenager using an
 smart-phone to check its social networks to the data scientist in a enormous
-bank which generates metrics upon the likelihood of a customer to default its
-current month credit card payment, both of them interested in getting their
-information in a decent amount of time. From banal to extremely important, from
-easy to obtain to very hard to obtain, generating information is the most
-essential function that a computer system performs. \\
+bank tuning credit score algorithms, the property of generating information has
+enabled unthinkable ways of improving our life and work. At this age, even the least
+interested person in the intrepid discipline of computer sciences would be still interested in 
+getting a new smart-phone and computer that performs its operations in a faster way than its 
+current hardware.\\
 
-There is not doubt that we live in the age of the information, and that every
-thing is connected to the internet one way or the other. People wakes up and go
-to sleep with their smart-phones on, almost every non trivial device is
-connected and generating data, thinking about cars, heaters, AI devices,
-video-consoles,CCTVs, Smart-Factories, and an infinite list of more devices.
-There are well know studies that suggest that the amount of data being generate
-grows XXX every year. \\ 
+There is not doubt that we not only live at the age of the information, we are currently at the 
+very stage of the big data. Data is being generated at an enormous growth, to give some you some idea: 90\% of the current data hold in internet was created in the last two years\cite{furht2016big}. This unprecedented phenomenon is not alien to anyone who has been around in the past years. We have embraced 
+big data, we rely on navigator apps, Netflix movies suggestion, Cloud services, AI devices, Smart heaters and smart-plugs (really?), and a very long list of everyday devices that in the past year have became smart.
+As scary as it sounds, every time we enable one device to be connected to a cloud service we give a part of our privacy regarding how we interact with such device to whatever company owns that data centers. However, this work is not an essay about the dangers of big data, rather is a malevolent work which
+describes a novel way to process data at a faster rate.
 
 Nonetheless, data by itself is useless, you can have a trillion records of the
 \textit{timestamps} of when people turn on their phone screens, but there is not
@@ -26,8 +24,8 @@ much you could do with that data apart of joining a big data club. You could
 visualize the CEO of Apple with a several terabytes text file of those
 \textit{timestamps}, would he be able to use this data to come up with a
 interesting feature for his new iPhone? Definitely not! He would need to extract
-insights from this data, he would need to process this data and he would need to
-visualize it \-. \\
+insights from this data, he would need to process this data, and then, he would need to
+visualize it -- which this humble computer scientist knows little about . \\
 
 Hopefully, at this point it might have already became obvious to the reader
 about the importance of data processing, or in other words, creating
@@ -50,7 +48,7 @@ of the work presented in this study is an improvement over the current Hadoop's
 load balancing techniques, this is, how well is the work distributed among every
 computer in the cluster such that we get the system best possible performance.
 The very interesting part of this work is the means by what this works enables a
-better load balancing, and this is by modifying one of the most simpl
+better load balancing, and this is by modifying one of the simplest
 components of the Hadoop framework, its file partitioning model.
 
 \subsection{Data partitioning}
@@ -69,7 +67,7 @@ partitioning determines the size and the number of the independent
 to partition our problem might empower us to have the ability to control the
 workload in each of the parallelizable units of our problem. \\
 
-This work depths into idea and explores different techniques to make
+This work deepens into idea and explores different techniques to make
 file partitioning a key process in the improvement of current big data
 processing and storage systems. The main contribution of this work results from
 adding the capacity to each of those partitions to dynamically change its size,
